@@ -1,67 +1,70 @@
 const express = require('express');
 const server = express();
+const morgon = require('morgon');
+const pruducts = require('./product.json');
 
-// const data = require('./friend.json');
-// const fs = require('fs');
-// const data = fs.readFileSync("./friend.json","utf-8");
-// console.log(data);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgon('dev'));
 
-const morgan = require('morgan');
-
-// Third-party middleware:-
-// 4.0 version -> body - parser
-
-// Built-in middleware:-
-// express.json()->raw/json formate data
-// express.urlencode()->form data
-// express.static()->static data
-
-// server.use(express.json());
-// server.use(express.urlencoded({extended: true}));
-server.use("/hello",express.static("public"))
-server.use(morgan("dev"))
-
-let middleware =(req,res,next)=>{
-    console.log(req.body);
-    if(req.body.age >= 18){
-        console.log("Success");
-        next();
-    }
-    else{
-        return res.json({message:"Inccorect Way!!!"})
-    }
-}
-
-// let loggerFun = (req, res, next)=>{
-//     console.log(req.url,"\t",req.method,"\t" ) ;
-//     next();   
-// }
-// server.use(loggerFun)
-
-// application level:-
-// server.use(middleware);
-
-
-// Router-level middleware:
-server.get('/',middleware, (req, res) => {
-        res.write("Welcome Express Js");
-        res.end();
+app.get("/",(req,res)=>{
+    res.send("Welcome to Express Server");
 })
 
+// CRUD
 
-// server.get("/friend",(req,res)=>{
-//     res.status(200);
-//     res.json(JSON.parse(data));
-// })
+// Add New Product - Create
 
-server.listen(3500,()=>{
-    console.log(`Server Start at http://localhost:3500`);   
+app.post("/products",(req,res)=>{
+    consol.log = (req.body);
+    products.push(req.body);
+    res.json({product: req.body , message : 'Product added successfully'});
+});
+
+// Get All Products - Read
+
+app.get("/products",(req,res)=>{
+    res.json(products);
+});
+
+// Get Single Product - Read
+
+app.get("/products/:id",(req,res)=>{
+    let id = +req.params.id;
+    let item = products.find(product => product.id === id);
+    res.json(item);
+});
+
+//replace Data - Put
+app.put('/products/:id', (req,res)=>{
+    let id = +req.params.id;
+    let productIndex = products.findIndex((product) => product.id === id);
+    // console.log(productIndex);
+    products.splice(productIndex, 1, {...product, ...req.body});
+    res.json({message: "Product Replace Success"})
+});
+
+// Update Data - Patch
+app.patch("/product/:id", (req,res)=>{
+     let id = +req.params.id;
+     let productIndex = products.findIndex((product) => product.id === id);
+    //  console.log(productIndex);
+    const product = products[productIndex];
+    // console.log(product);
+     products[productIndex] = {...products[productIndex],...req.body};
+     res.json({message: "Product Updated Success"})
+});
+
+// Delete Data - Delete
+
+app.delete("/products/:id",(req,res)=>{
+    let id = +req.params.id;
+    let productIndex - products.findIndex((product) => product.id === id);
+    const product = products[productIndex];
+    products.splice(productIndex, 1);
+    res.json({product,message: "Product Delete Success"})
+});
+
+app.listen(1234, ()=>{
+    console.log("server start");
 })
-
-
-/*
-    git checkout -b sk-1
-    git add .
-    git commit -m "Your commit"
-    git push -u origin sk-1
-*/
