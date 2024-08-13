@@ -68,3 +68,40 @@ app.delete("/products/:id",(req,res)=>{
 app.listen(1234, ()=>{
     console.log("server start");
 })
+
+
+// user api
+
+server.get('/user',(req,res)=>{
+    res.status(200);
+    res.json({message:'user login successfuly'});
+})
+
+server.post('/user',(req,res)=>{
+    res.status(201);
+    res.json({message:'user post method'});
+})
+// server.get('/admin',mdlwr,(req,res)=>{
+//     res.status(200);
+//     res.json({message:'user login successfuly'});
+//     res.end();
+// })
+
+// server.put('/user',(req,res)=>{
+//     res.status(200);
+//     res.json({message:'user put method'});
+// })
+
+// server.patch('/user',(req,res)=>{
+//     res.status(200);
+//     res.json({message:'user patch method'});
+// })
+
+// server.delete('/user',(req,res)=>{
+//     res.status(200);
+//     res.json({message:'user delete method'});
+// })
+
+server.listen(199,()=>{
+console.log('server start at http://localhost:199');
+});
