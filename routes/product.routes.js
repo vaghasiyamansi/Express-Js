@@ -21,7 +21,7 @@ productRoutes.get("/", getAllProducts);
 productRoutes.get("/:id", getProduct);
 
 // Replace Data - Put
-productRoutes.post("/:id", replaceProduct);
+productRoutes.put("/:id", replaceProduct);
 
 // Update Data - Patch
 productRoutes.patch("/:id", updateProduct);
