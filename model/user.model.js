@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const userSchema = mongoose.Schema({
     firstName: String,
     lastName: {
@@ -8,12 +7,18 @@ const userSchema = mongoose.Schema({
     email:{
         type: String
     },
+    password:{
+        type: String
+    },
+    mobileNo:{
+        type: String
+    },
     age:{
         type: Number
     },
-    hobbies: [{
+    profileImage:{
         type: String
-    }],
+    },
     address:{
         line1: String,
         line2: String,
@@ -23,6 +28,10 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     }
+},
+{
+    versionKey: false,
+    timestamps: true
 });
 
 module.exports = mongoose.model('users', userSchema);
