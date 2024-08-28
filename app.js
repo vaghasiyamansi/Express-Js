@@ -1,48 +1,35 @@
+require("dotenv").config()
 const express = require('express');
 const app = express();
-const morgone = require('morgone');
-const productRoutes = require('./routes/product.routes')
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const port = process.env.PORT;
+const dbURL = process.env.MONGO_URI;
+const path = require('path');
+
+server.use(express.json());
+server.use(express.urlencoded({extended: true}));
+server.use(morgan("dev"));
+server.use("/public/images",express.static(path.join(__dirname,"public/images")))
 
 
-// Database Connection
-mongoose
-      .connect("mongodb://127.0.0.1:27017/node8to10")
-      .then(() => console.log('Database connection established successfully'))
-      .catch(err=>console.log(err));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
-app.use(morgan("dev"));
-
-app.get("/", (req, res) => {
-    res.send("Welcome to Express Server");
+server.get("/",(req,res)=>{
+    res.send("Welcome to the Express server");
 });
 
-app.get("/", (req, res) => {
-    res.send("Welcome to Express Server");
-});
+// Product routes
+const productRoutes = require("./routes/product.routes");
+server.use("/api/product",productRoutes);
 
-const productRoutes = require("../routes/product.routes");
+// User routes
 const userRoutes = require("./routes/user.routes");
+server.use("/api/users",userRoutes);
 
-app.use("/api/products", productRoutes);
-app.use("/api/users", userRoutes);
-
-app.listen(1234, () => {
-    console.log("Server started http://localhost:1234");
-});
-
-
-// app.use(express.json());
-// app.use(express.urlencoded({extended: true}));
-// app.use(morgone("dev"));
-
-// app.get("/", (req, res) => {
-//     res.send("Welcome to Express Server");
-// });
-
-// app.use('/api/products', productRoutes);
-
-// app.listen(1234 , () =>{
-//     console.log("server start");
-// });
+server.listen(port,()=>{
+    // Database connection
+    mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(()=>console.log(`Database connected..👍`))
+    .catch(err=>console.log(err))
+    console.log(`server start http://localhost:${port}`);
+})

@@ -3,6 +3,8 @@ const {registerUser, loginUser, userProfile} = require('../controller/user.contr
 const userRoutes = express.Router();
 
 const{verifyToken} = require('../helper/verifyToken');
+const {upload} = require("../Helpers/imageUpload");
+
 
 // userRoutes.post("/", addNeUser);
 // userRoutes.get("/", getAllUser);
