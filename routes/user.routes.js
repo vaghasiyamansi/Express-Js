@@ -15,5 +15,6 @@ userRoutes.post("/register", registerUser);
 userRoutes.post("/Login", loginUser);
 
 userRoutes.get("/me", verifyToken, userProfile);
+userRoutes.put("/update-profile",verifyToken,updateProfile);
 
 module.exports = userRoutes;
