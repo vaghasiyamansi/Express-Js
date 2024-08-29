@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 const port = process.env.PORT;
 const dbURL = process.env.MONGO_URI;
 const path = require('path');
+const ejs = require('ejs');
+
+app.set('view engine', 'ejs');
 
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
@@ -29,7 +32,7 @@ server.listen(port,()=>{
     // Database connection
     mongoose
     .connect(process.env.MONGODB_URI)
-    .then(()=>console.log(`Database connected..👍`))
+    .then(()=>console.log(`Database connected`))
     .catch(err=>console.log(err))
     console.log(`server start http://localhost:${port}`);
 })

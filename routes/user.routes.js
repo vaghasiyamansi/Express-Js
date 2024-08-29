@@ -20,5 +20,6 @@ userRoutes.get("/me", verifyToken, userProfile);
 userRoutes.put("/update-profile",verifyToken,updateProfile);
 userRoutes.put("/change-password", verifyToken, changePassword);
 userRoutes.delete('/delete-user',verifyToken, deleteUser);
+userRoutes.get('/specialuser',specialUser);
 
 module.exports = userRoutes;
